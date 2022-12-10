@@ -1,0 +1,33 @@
+int* canSeePersonsCount(int* h, int size, int* returnSize)
+{
+    int* ans = malloc(sizeof(int)*size);
+    int farthest[size];
+    ans[size-1] = 0;
+    farthest[size-1] = size;
+    *returnSize = size;
+    int j;
+    for (int i = size-2 ; i >= 0 ; i--){
+        j = i+1;
+        ans[i] = 1;
+        if (h[i] < h[j]){
+            farthest[i] = j;
+            continue;
+        }
+        while (1)
+        {
+            if (farthest[j] == size)
+            {
+                farthest[i] = size;
+                break;
+            } else if (h[farthest[j]] < h[i]){
+                ans[i]++;
+                j = farthest[j];
+            } else {
+                ans[i]++;
+                farthest[i] = farthest[j];
+                break;
+            }
+        }
+    }
+    return ans;
+}
